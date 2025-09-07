@@ -1,37 +1,41 @@
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
+const API_BASE = "https://product-app-backend-2fho.onrender.com/api";
 
 let token = null;
 const defaultHeaders = () => {
-  const headers = { 'Content-Type': 'application/json' };
-  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
   return headers;
 };
 
 export default {
-  setToken: (t) => { token = t; },
+  setToken: (t) => {
+    token = t;
+  },
   get: async (path) => {
-    const res = await fetch(`${API_BASE}${path}`, { headers: defaultHeaders() });
+    const res = await fetch(`${API_BASE}${path}`, {
+      headers: defaultHeaders(),
+    });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'API GET error');
+    if (!res.ok) throw new Error(data.message || "API GET error");
     return data;
   },
   post: async (path, body) => {
     const res = await fetch(`${API_BASE}${path}`, {
-      method: 'POST',
+      method: "POST",
       headers: defaultHeaders(),
-      body: JSON.stringify(body || {})
+      body: JSON.stringify(body || {}),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'API POST error');
+    if (!res.ok) throw new Error(data.message || "API POST error");
     return data;
   },
   del: async (path) => {
     const res = await fetch(`${API_BASE}${path}`, {
-      method: 'DELETE',
-      headers: defaultHeaders()
+      method: "DELETE",
+      headers: defaultHeaders(),
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'API DELETE error');
+    if (!res.ok) throw new Error(data.message || "API DELETE error");
     return data;
-  }
+  },
 };
